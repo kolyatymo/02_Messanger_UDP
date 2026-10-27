@@ -1,0 +1,40 @@
+﻿<Window x:Class="_03_task.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_03_task"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <DockPanel>
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label FontSize="20" Margin="5" >Code Car [AA] --></Label>
+            <TextBox Padding="5" Margin="5" VerticalContentAlignment="Center" x:Name="MyTextBox" Grid.Column="1"></TextBox>
+            <Button Width="100" Background="GreenYellow" Margin="5" FontSize="20" Grid.Column="2" Click="Select_Button">Select</Button>
+            <Button Width="120" Background="GreenYellow" Margin="5" FontSize="20" Grid.Column="3" Click="Connect_Button">Connect</Button>
+            <Button Width="120" Background="GreenYellow" Margin="5" FontSize="20" Grid.Column="4" Click="Disconnect_Button">Disconnect</Button>
+        </Grid>
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label FontSize="20" Margin="5" >Region --></Label>
+            <TextBox Padding="5" Margin="5" VerticalContentAlignment="Center" x:Name="MyTextBoxRegion" Grid.Column="1"></TextBox>
+            <Button Width="100" Background="GreenYellow" Margin="5" FontSize="20" Grid.Column="2" Click="Select_Button_Region">Select</Button>
+        </Grid>
+        <TextBlock x:Name="MyTextBlock"></TextBlock>
+    </DockPanel>
+</Window>

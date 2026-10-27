@@ -9,8 +9,8 @@
     <DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Label FontSize="15" FontWeight="Bold" Margin="10">Message : </Label>
-            <Button Click="Join_Button_Click" Margin="5" Padding="20 10" DockPanel.Dock="Right">Join</Button>
-            <Button Margin="5" Padding="20 10" DockPanel.Dock="Right" Click="Leave_Button_Click">Leave</Button>
+            <Button Click="ConnectButton_Click" Margin="5" Padding="20 10" DockPanel.Dock="Right">Connect</Button>
+            <Button Margin="5" Padding="20 10" DockPanel.Dock="Right" Click="DisconnectButton_Click">Disconnect</Button>
             <Button Margin="5" Padding="20 10" DockPanel.Dock="Right" Click="Send_Button_Click">Send</Button>
             <TextBox x:Name="msgTextBox" VerticalContentAlignment="Center"></TextBox>
         </DockPanel>

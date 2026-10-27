@@ -7,31 +7,58 @@ public class ChatServer
 {
     const int port = 4040;
     const string JOIN_CMD = "$<Join>";
-    const string Leave_CMD = "$(Leave)";
-    List<IPEndPoint> members;
-    UdpClient udpClient;
-    IPEndPoint clientEndPoint = null;
+    //const string Leave_CMD = "$(Leave)";
+
+    TcpListener server;
+
+    //List<IPEndPoint> members;
+    //UdpClient udpClient;
+    IPEndPoint address = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+    //IPEndPoint clientEndPoint = null;
 
     public ChatServer()
     {
-        udpClient = new UdpClient(port);
-        members = new List<IPEndPoint>();
+        /*udpClient = new UdpClient(port);
+        members = new List<IPEndPoint>();*/
+
+        server = new TcpListener(address);
     }
 
     public void Start()
     {
+        server.Start();
+        Console.WriteLine("Waiting for connection");
+        TcpClient client = server.AcceptTcpClient();
+        Console.WriteLine("Connected!!!");
+        NetworkStream ns = client.GetStream();
+        StreamReader sr = new StreamReader(ns);
+        StreamWriter sw = new StreamWriter(ns);
         while (true)
         {
-            byte[] data = udpClient.Receive(ref clientEndPoint);
-            string message = Encoding.Unicode.GetString(data);
+            string message = sr.ReadLine()!; // ! --> not null
 
-            if (message.StartsWith(JOIN_CMD))
+            if(message == "$<close>")
+            {
+                ns.Close();
+                server?.Stop();
+                break;
+            }
+
+            Console.WriteLine($"Got message {message} from {client.Client.LocalEndPoint} {DateTime.Now.ToShortTimeString()} ");
+
+            sw.WriteLine(message);
+            sw.Flush();
+        }
+            /*byte[] data = udpClient.Receive(ref clientEndPoint);
+            string message = Encoding.Unicode.GetString(data);*/
+
+            /*if (message.StartsWith(JOIN_CMD))
             {
                 string name = message.Substring(JOIN_CMD.Length);
                 AddMember(clientEndPoint, name);
                 continue;
-            }
-            switch (message)
+            }*/
+           /* switch (message)
             {
                 case JOIN_CMD:
                     break;
@@ -42,13 +69,20 @@ public class ChatServer
                     Console.WriteLine($"Got message {message,-20} from {clientEndPoint} at {DateTime.Now.ToShortTimeString()}");
                     SendToAll(message);
                     break;
-            }
-        }
+            }*/
+        
     }
-    private void AddMember(IPEndPoint clientPoint, string name)
+    /*private void AddMember(IPEndPoint clientPoint, string name)
     {
-        members.Add(clientPoint);
-        Console.WriteLine($"{name} was added");
+        if (members.Contains(clientPoint))
+        {
+            Console.WriteLine("member tyt");
+        }
+        else
+        {
+            members.Add(clientPoint);
+            Console.WriteLine($"{name} was added");
+        }
     }
 
     private void DeleteMember(IPEndPoint clientPoint)
@@ -56,15 +90,15 @@ public class ChatServer
         members.Remove(clientPoint);
         Console.WriteLine("Member was Deleted");
 
-    }
-    private void SendToAll(string message)
+    }*/
+    /*private void SendToAll(string message)
     {
         byte[] data = Encoding.Unicode.GetBytes(message);
         foreach (var member in members)
         {
             udpClient.SendAsync(data, data.Length, member);
         }
-    }
+    }*/
 }
 
 internal class Program
